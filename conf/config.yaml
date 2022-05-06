@@ -1,0 +1,56 @@
+# Redis 缓存配置
+redis:
+  db: 0
+  addr: '127.0.0.1:6379'
+  password: ''
+
+# MySQL 连接配置
+mysql:
+  host: '127.0.0.1'
+  port: 3306
+  database: 'easygoadmin.iris.antdvue'
+  username: 'root'
+  password: ''
+  charset: 'utf8mb4'
+  debug: true
+  logLevel: debug
+  maxOpenConns: 800 # 最大打开连接数
+  maxIdleConns: 100 # 连接池的空闲数大小
+  timeout: '3s'
+  parseTime: true
+
+# Redis缓存
+Redis:
+  Network: "tcp"
+  Addr: "127.0.0.1:6379"
+  Timeout: 30
+  MaxActive: 10
+  Password: ""
+  Database: ""
+  Prefix: ""
+  Delim: "-"
+
+# 文件上传
+attachment:
+  # 文件存储路径
+  file_path: 'D:\\RXThinkCMF\\uploads'
+  # 上传文件最大值
+  file_size: 52428800
+  # 允许上传文件后缀
+  file_ext: 'bmp,ico,psd,jpg,jpeg,png,gif,doc,docx,xls,xlsx,pdf,zip,rar,7z,tz,mp3,mp4,mov,swf,flv,avi,mpg,ogg,wav,flac,ape'
+
+
+# 系统配置
+easygoadmin:
+  # 名称
+  name: "EasyGoAdmin敏捷开发框架"
+  # 版本号
+  version: "v1.0.0"
+  # IP地址
+  addr: 0.0.0.0
+  # 端口号
+  port: 9089
+  # 调试模式
+  debug: false
+  # 图片域名
+  image: "http://images.beego.ele"
