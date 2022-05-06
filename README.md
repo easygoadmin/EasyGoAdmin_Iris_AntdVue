@@ -29,8 +29,8 @@
 + 代码生成：一键生成模块CRUD的功能，包括后端Go和前端HTML、JS等相关代码。
 + 案例演示：常规代码生成器一键生成后的演示案例。
 
-## 👷 开发者信息
-* 系统名称：EasyGoAdmin敏捷开发框架Iris+AntdVue版本
+## 👷 软件信息
+* 软件名称：EasyGoAdmin敏捷开发框架Iris+AntdVue版本
 * 软件作者：@半城风雨
 * 软件出处：深圳EasyGoAdmin研发中心
 * 官网网址：[http://www.easygoadmin.vip](http://www.easygoadmin.vip)
