@@ -129,7 +129,7 @@ easygoadmin
 ![效果图](./public/uploads/demo/22.png)
 
 ## ✨  特别鸣谢
-感谢[Iris](https://iris-go.com/)、[VueJs](https://cn.vuejs.org/)、[AntDesign](https://2x.antdv.com/docs/vue/introduce-cn/)等优秀开源项目。
+感谢[Iris](https://iris-go.com/)、[Vue](https://cn.vuejs.org/)、[AntDesign](https://2x.antdv.com/docs/vue/introduce-cn/)等优秀开源项目。
 
 ## 📚 版权信息
 
