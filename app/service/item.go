@@ -84,7 +84,7 @@ func (s *itemService) Add(req dto.ItemAddReq, userId int) (int64, error) {
 	entity.Url = req.Url
 	entity.Status = req.Status
 	entity.Note = req.Note
-	entity.Sort = req.Status
+	entity.Sort = req.Sort
 	entity.CreateUser = userId
 	entity.CreateTime = time.Now().Unix()
 	entity.UpdateUser = userId
@@ -121,7 +121,7 @@ func (s *itemService) Update(req dto.ItemUpdateReq, userId int) (int64, error) {
 	entity.Url = req.Url
 	entity.Status = req.Status
 	entity.Note = req.Note
-	entity.Sort = req.Status
+	entity.Sort = req.Sort
 
 	// 图片处理
 	if req.Image != "" {

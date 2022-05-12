@@ -28,10 +28,12 @@ import (
 	"easygoadmin/app/model"
 	"easygoadmin/app/service"
 	"easygoadmin/app/vo"
+	"easygoadmin/conf"
 	"easygoadmin/utils"
 	"easygoadmin/utils/common"
 	"github.com/gookit/validate"
 	"github.com/kataras/iris/v12"
+	"strings"
 )
 
 var Ad = new(AdController)
@@ -89,6 +91,10 @@ func (c *AdController) Detail(ctx iris.Context) {
 		// 广告封面
 		if info.Cover != "" {
 			adInfoVo.Cover = utils.GetImageUrl(info.Cover)
+		}
+		// 富文本图片替换处理
+		if adInfoVo.Content != "" {
+			adInfoVo.Content = strings.ReplaceAll(adInfoVo.Content, "[IMG_URL]", conf.CONFIG.EGAdmin.Image)
 		}
 
 		// 返回结果

@@ -86,6 +86,15 @@ func (c *MenuController) Detail(ctx iris.Context) {
 		var menuInfoVo = &vo.MenuInfoVo{}
 		utils.StructCopy(info, menuInfoVo)
 
+		// 获取节点
+		chkedList := make([]model.Menu, 0)
+		utils.XormDb.Where("parent_id=? and type=1 and mark=1", id).Find(&chkedList)
+		checkedList := make([]int, 0)
+		for _, v := range chkedList {
+			checkedList = append(checkedList, v.Sort)
+		}
+		menuInfoVo.CheckedList = checkedList
+
 		// 返回结果
 		ctx.JSON(common.JsonResult{
 			Code: 0,

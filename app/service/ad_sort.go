@@ -26,7 +26,7 @@ package service
 import (
 	"easygoadmin/app/constant"
 	"easygoadmin/app/dto"
-	model2 "easygoadmin/app/model"
+	"easygoadmin/app/model"
 	"easygoadmin/app/vo"
 	"easygoadmin/utils"
 	"easygoadmin/utils/gconv"
@@ -53,7 +53,7 @@ func (s *adSortService) GetList(req dto.AdSortPageReq) ([]vo.AdSortListVo, int64
 	offset := (req.Page - 1) * req.Limit
 	query = query.Limit(req.Limit, offset)
 	// 对象转换
-	var list []model2.AdSort
+	var list []model.AdSort
 	count, err := query.FindAndCount(&list)
 	if err != nil {
 		return nil, 0, err
@@ -70,7 +70,7 @@ func (s *adSortService) GetList(req dto.AdSortPageReq) ([]vo.AdSortListVo, int64
 		}
 		// 站点名称
 		if v.ItemId > 0 {
-			info := &model2.Item{Id: v.ItemId}
+			info := &model.Item{Id: v.ItemId}
 			has, err2 := info.Get()
 			if err2 == nil && has {
 				item.ItemName = info.Name
@@ -94,7 +94,7 @@ func (s *adSortService) Add(req dto.AdSortAddReq, userId int) (int64, error) {
 		return 0, errors.New("演示环境，暂无权限操作")
 	}
 	// 实例化对象
-	var entity model2.AdSort
+	var entity model.AdSort
 	entity.Description = req.Description
 	entity.ItemId = req.ItemId
 	entity.CateId = req.CateId
@@ -116,7 +116,7 @@ func (s *adSortService) Update(req dto.AdSortUpdateReq, userId int) (int64, erro
 		return 0, errors.New("演示环境，暂无权限操作")
 	}
 	// 查询记录
-	entity := &model2.AdSort{Id: req.Id}
+	entity := &model.AdSort{Id: req.Id}
 	has, err := entity.Get()
 	if err != nil || !has {
 		return 0, err
@@ -144,7 +144,7 @@ func (s *adSortService) Delete(ids string) (int64, error) {
 	idsArr := strings.Split(ids, ",")
 	if len(idsArr) == 1 {
 		// 单个删除
-		entity := &model2.AdSort{Id: gconv.Int(ids)}
+		entity := &model.AdSort{Id: gconv.Int(ids)}
 		rows, err := entity.Delete()
 		if err != nil || rows == 0 {
 			return 0, errors.New("删除失败")
@@ -155,7 +155,7 @@ func (s *adSortService) Delete(ids string) (int64, error) {
 		count := 0
 		for _, v := range idsArr {
 			id, _ := strconv.Atoi(v)
-			entity := &model2.AdSort{Id: id}
+			entity := &model.AdSort{Id: id}
 			rows, err := entity.Delete()
 			if rows == 0 || err != nil {
 				continue
@@ -168,7 +168,7 @@ func (s *adSortService) Delete(ids string) (int64, error) {
 
 func (s *adSortService) GetAdSortList() []vo.AdSortListVo {
 	// 查询广告位列表
-	var list []model2.AdSort
+	var list []model.AdSort
 	utils.XormDb.Where("mark=1").OrderBy("sort asc").Find(&list)
 	// 数据处理
 	result := make([]vo.AdSortListVo, 0)

@@ -26,7 +26,7 @@ package service
 import (
 	"easygoadmin/app/constant"
 	"easygoadmin/app/dto"
-	model2 "easygoadmin/app/model"
+	"easygoadmin/app/model"
 	"easygoadmin/app/vo"
 	"easygoadmin/utils"
 	"easygoadmin/utils/gconv"
@@ -53,7 +53,7 @@ func (s *adService) GetList(req dto.AdPageReq) ([]vo.AdListVo, int64, error) {
 	offset := (req.Page - 1) * req.Limit
 	query = query.Limit(req.Limit, offset)
 	// 对象转换
-	var list []model2.Ad
+	var list []model.Ad
 	count, err := query.FindAndCount(&list)
 	if err != nil {
 		return nil, 0, err
@@ -74,7 +74,7 @@ func (s *adService) GetList(req dto.AdPageReq) ([]vo.AdListVo, int64, error) {
 		}
 		// 所属广告位
 		if v.AdSortId > 0 {
-			adSortInfo := &model2.AdSort{Id: v.AdSortId}
+			adSortInfo := &model.AdSort{Id: v.AdSortId}
 			has, err := adSortInfo.Get()
 			if err == nil && has {
 				item.AdSortDesc = adSortInfo.Description + " >> " + gconv.String(adSortInfo.LocId)
@@ -92,12 +92,14 @@ func (s *adService) Add(req dto.AdAddReq, userId int) (int64, error) {
 		return 0, errors.New("演示环境，暂无权限操作")
 	}
 	// 实例化对象
-	var entity model2.Ad
+	var entity model.Ad
 	entity.Title = req.Title
 	entity.AdSortId = req.AdSortId
 	entity.Type = req.Type
 	entity.Description = req.Description
-	entity.Content = req.Content
+	// 富文本处理
+	content := utils.SaveImageContent(req.Content, req.Title, "ad")
+	entity.Content = content
 	entity.Url = req.Url
 	entity.Width = req.Width
 	entity.Height = req.Height
@@ -131,7 +133,7 @@ func (s *adService) Update(req dto.AdUpdateReq, userId int) (int64, error) {
 		return 0, errors.New("演示环境，暂无权限操作")
 	}
 	// 查询记录
-	entity := &model2.Ad{Id: req.Id}
+	entity := &model.Ad{Id: req.Id}
 	has, err := entity.Get()
 	if err != nil || !has {
 		return 0, err
@@ -142,7 +144,9 @@ func (s *adService) Update(req dto.AdUpdateReq, userId int) (int64, error) {
 	entity.AdSortId = req.AdSortId
 	entity.Type = req.Type
 	entity.Description = req.Description
-	entity.Content = req.Content
+	// 富文本处理
+	content := utils.SaveImageContent(req.Content, req.Title, "ad")
+	entity.Content = content
 	entity.Url = req.Url
 	entity.Width = req.Width
 	entity.Height = req.Height
@@ -177,7 +181,7 @@ func (s *adService) Delete(ids string) (int64, error) {
 	idsArr := strings.Split(ids, ",")
 	if len(idsArr) == 1 {
 		// 单个删除
-		entity := &model2.Ad{Id: gconv.Int(ids)}
+		entity := &model.Ad{Id: gconv.Int(ids)}
 		rows, err := entity.Delete()
 		if err != nil || rows == 0 {
 			return 0, errors.New("删除失败")
@@ -188,7 +192,7 @@ func (s *adService) Delete(ids string) (int64, error) {
 		count := 0
 		for _, v := range idsArr {
 			id, _ := strconv.Atoi(v)
-			entity := &model2.Ad{Id: id}
+			entity := &model.Ad{Id: id}
 			rows, err := entity.Delete()
 			if rows == 0 || err != nil {
 				continue
@@ -204,14 +208,14 @@ func (s *adService) Status(req dto.AdStatusReq, userId int) (int64, error) {
 		return 0, errors.New("演示环境，暂无权限操作")
 	}
 	// 查询记录是否存在
-	info := &model2.Ad{Id: gconv.Int(req.Id)}
+	info := &model.Ad{Id: gconv.Int(req.Id)}
 	has, err := info.Get()
 	if err != nil || !has {
 		return 0, errors.New("记录不存在")
 	}
 
 	// 设置状态
-	entity := &model2.Ad{}
+	entity := &model.Ad{}
 	entity.Id = info.Id
 	entity.Status = gconv.Int(req.Status)
 	entity.UpdateUser = userId

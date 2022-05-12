@@ -32,19 +32,20 @@ package vo
 import "easygoadmin/app/model"
 
 type MenuInfoVo struct {
-	Id         int    `json:"id"`
-	ParentId   int    `json:"parentId"`
-	Title      string `json:"title"`
-	Icon       string `json:"icon"`
-	Path       string `json:"path"`
-	Component  string `json:"component"`
-	Target     string `json:"target"`
-	Permission string `json:"permission"`
-	Type       int    `json:"type"`
-	Status     int    `json:"status"`
-	Hide       int    `json:"hide"`
-	Note       string `json:"note"`
-	Sort       int    `json:"sort"`
+	Id          int    `json:"id"`
+	ParentId    int    `json:"parentId"`
+	Title       string `json:"title"`
+	Icon        string `json:"icon"`
+	Path        string `json:"path"`
+	Component   string `json:"component"`
+	Target      string `json:"target"`
+	Permission  string `json:"permission"`
+	Type        int    `json:"type"`
+	Status      int    `json:"status"`
+	Hide        int    `json:"hide"`
+	Note        string `json:"note"`
+	Sort        int    `json:"sort"`
+	CheckedList []int  `json:"checkedList"`
 }
 
 // 菜单Vo
